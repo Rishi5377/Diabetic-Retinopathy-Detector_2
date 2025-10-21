@@ -5,9 +5,9 @@ export default {
   content: [
     "./index.html",
     "./source/**/*.{ts,tsx}",
-    "./pages/**/*.{ts,tsx}", 
-    "./components/**/*.{ts,tsx}", 
-    "./app/**/*.{ts,tsx}", 
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}"
   ],
   prefix: "",

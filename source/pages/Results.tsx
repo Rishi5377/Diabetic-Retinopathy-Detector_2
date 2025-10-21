@@ -76,7 +76,7 @@ const Results = () => {
   const handleDownloadReport = async () => {
     try {
       toast.loading('Generating PDF report...');
-      
+
       // Create PDF
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -87,24 +87,24 @@ const Results = () => {
       // Header
       pdf.setFillColor(37, 99, 235); // Primary blue
       pdf.rect(0, 0, pageWidth, 40, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(24);
       pdf.setFont('helvetica', 'bold');
       pdf.text('Diabetic Retinopathy Analysis Report', pageWidth / 2, 20, { align: 'center' });
-      
+
       pdf.setFontSize(12);
       pdf.setFont('helvetica', 'normal');
       pdf.text('AI-Powered Retinal Scan Analysis', pageWidth / 2, 30, { align: 'center' });
-      
+
       yPosition = 50;
 
       // Report Date
       pdf.setTextColor(100, 100, 100);
       pdf.setFontSize(10);
-      const reportDate = new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
+      const reportDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
@@ -115,20 +115,20 @@ const Results = () => {
       // Diagnosis Section
       pdf.setFillColor(240, 240, 240);
       pdf.rect(margin, yPosition, pageWidth - 2 * margin, 35, 'F');
-      
+
       pdf.setTextColor(0, 0, 0);
       pdf.setFontSize(14);
       pdf.setFont('helvetica', 'bold');
       pdf.text('DIAGNOSIS', margin + 5, yPosition + 8);
-      
+
       pdf.setFontSize(16);
       pdf.setTextColor(37, 99, 235);
       pdf.text(diagnosis, margin + 5, yPosition + 18);
-      
+
       pdf.setFontSize(11);
       pdf.setTextColor(100, 100, 100);
       pdf.text(`AI Confidence: ${confidence.toFixed(1)}%`, margin + 5, yPosition + 28);
-      
+
       yPosition += 45;
 
       // Risk Level Section
@@ -138,15 +138,15 @@ const Results = () => {
         high: [239, 68, 68] as [number, number, number]      // Red
       };
       const riskColor = riskColors[riskLevel];
-      
+
       pdf.setFillColor(...riskColor);
       pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12, 'F');
-      
+
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(12);
       pdf.setFont('helvetica', 'bold');
       pdf.text(`RISK LEVEL: ${currentRisk.label.toUpperCase()}`, margin + 5, yPosition + 8);
-      
+
       yPosition += 20;
 
       // Recommendations
@@ -173,20 +173,20 @@ const Results = () => {
           pdf.addPage();
           yPosition = margin;
         }
-        
+
         // Numbering circle
         pdf.setFillColor(37, 99, 235);
         pdf.circle(margin + 3, yPosition + 2, 3, 'F');
         pdf.setTextColor(255, 255, 255);
         pdf.setFontSize(8);
         pdf.text(`${index + 1}`, margin + 3, yPosition + 3, { align: 'center' });
-        
+
         // Prescription text
         pdf.setTextColor(0, 0, 0);
         pdf.setFontSize(10);
         const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 15);
         pdf.text(splitPrescription, margin + 10, yPosition + 3);
-        
+
         yPosition += Math.max(splitPrescription.length * 5, 8) + 3;
       });
 
@@ -199,12 +199,12 @@ const Results = () => {
 
       pdf.setFillColor(255, 243, 224);
       pdf.rect(margin, yPosition, pageWidth - 2 * margin, 40, 'F');
-      
+
       pdf.setTextColor(146, 64, 14);
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'bold');
       pdf.text('IMPORTANT MEDICAL NOTICE', margin + 5, yPosition + 8);
-      
+
       pdf.setFontSize(9);
       pdf.setFont('helvetica', 'normal');
       const disclaimer = 'This AI analysis is intended for screening purposes only and should not replace professional medical advice. Please consult with a qualified ophthalmologist or healthcare provider for a comprehensive diagnosis and treatment plan. Early detection and proper management are key to preserving your vision.';
@@ -220,7 +220,7 @@ const Results = () => {
       // Save PDF
       const fileName = `Retina_Analysis_Report_${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
-      
+
       toast.dismiss();
       toast.success('PDF report downloaded successfully!');
     } catch (error) {
@@ -356,7 +356,7 @@ const Results = () => {
 
             <div className="mt-6 p-4 bg-warning/5 rounded-lg border border-warning/20">
               <p className="text-sm text-muted-foreground italic">
-                <strong className="text-warning">Note:</strong> These recommendations are general guidelines. 
+                <strong className="text-warning">Note:</strong> These recommendations are general guidelines.
                 Always follow your healthcare provider's specific instructions and treatment plan.
               </p>
             </div>
