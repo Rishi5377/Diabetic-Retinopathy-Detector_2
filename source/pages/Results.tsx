@@ -5,6 +5,8 @@ import Header from '@/components/Header';
 import StepIndicator from '@/components/StepIndicator';
 import { FileDown, RotateCcw, AlertTriangle, CheckCircle2, AlertCircle, Pill } from 'lucide-react';
 import { toast } from 'sonner';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const Results = () => {
   const navigate = useNavigate();
@@ -71,9 +73,161 @@ const Results = () => {
     ],
   };
 
-  const handleDownloadReport = () => {
-    toast.success('PDF report download started!');
-    // In a real app, this would generate and download a PDF
+  const handleDownloadReport = async () => {
+    try {
+      toast.loading('Generating PDF report...');
+      
+      // Create PDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 20;
+      let yPosition = margin;
+
+      // Header
+      pdf.setFillColor(37, 99, 235); // Primary blue
+      pdf.rect(0, 0, pageWidth, 40, 'F');
+      
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(24);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Diabetic Retinopathy Analysis Report', pageWidth / 2, 20, { align: 'center' });
+      
+      pdf.setFontSize(12);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text('AI-Powered Retinal Scan Analysis', pageWidth / 2, 30, { align: 'center' });
+      
+      yPosition = 50;
+
+      // Report Date
+      pdf.setTextColor(100, 100, 100);
+      pdf.setFontSize(10);
+      const reportDate = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      pdf.text(`Report Generated: ${reportDate}`, margin, yPosition);
+      yPosition += 15;
+
+      // Diagnosis Section
+      pdf.setFillColor(240, 240, 240);
+      pdf.rect(margin, yPosition, pageWidth - 2 * margin, 35, 'F');
+      
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFontSize(14);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('DIAGNOSIS', margin + 5, yPosition + 8);
+      
+      pdf.setFontSize(16);
+      pdf.setTextColor(37, 99, 235);
+      pdf.text(diagnosis, margin + 5, yPosition + 18);
+      
+      pdf.setFontSize(11);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text(`AI Confidence: ${confidence.toFixed(1)}%`, margin + 5, yPosition + 28);
+      
+      yPosition += 45;
+
+      // Risk Level Section
+      const riskColors = {
+        low: [34, 197, 94] as [number, number, number],     // Green
+        moderate: [234, 179, 8] as [number, number, number], // Yellow
+        high: [239, 68, 68] as [number, number, number]      // Red
+      };
+      const riskColor = riskColors[riskLevel];
+      
+      pdf.setFillColor(...riskColor);
+      pdf.rect(margin, yPosition, pageWidth - 2 * margin, 12, 'F');
+      
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFontSize(12);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(`RISK LEVEL: ${currentRisk.label.toUpperCase()}`, margin + 5, yPosition + 8);
+      
+      yPosition += 20;
+
+      // Recommendations
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFontSize(11);
+      pdf.setFont('helvetica', 'normal');
+      const splitRecommendations = pdf.splitTextToSize(recommendations, pageWidth - 2 * margin - 10);
+      pdf.text(splitRecommendations, margin + 5, yPosition);
+      yPosition += splitRecommendations.length * 6 + 10;
+
+      // Management Plan
+      pdf.setFontSize(14);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(37, 99, 235);
+      pdf.text('RECOMMENDED MANAGEMENT PLAN', margin, yPosition);
+      yPosition += 10;
+
+      pdf.setFontSize(10);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(0, 0, 0);
+
+      prescriptions[riskLevel].forEach((prescription, index) => {
+        if (yPosition > pageHeight - 40) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        
+        // Numbering circle
+        pdf.setFillColor(37, 99, 235);
+        pdf.circle(margin + 3, yPosition + 2, 3, 'F');
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFontSize(8);
+        pdf.text(`${index + 1}`, margin + 3, yPosition + 3, { align: 'center' });
+        
+        // Prescription text
+        pdf.setTextColor(0, 0, 0);
+        pdf.setFontSize(10);
+        const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 15);
+        pdf.text(splitPrescription, margin + 10, yPosition + 3);
+        
+        yPosition += Math.max(splitPrescription.length * 5, 8) + 3;
+      });
+
+      // Medical Disclaimer
+      yPosition += 10;
+      if (yPosition > pageHeight - 60) {
+        pdf.addPage();
+        yPosition = margin;
+      }
+
+      pdf.setFillColor(255, 243, 224);
+      pdf.rect(margin, yPosition, pageWidth - 2 * margin, 40, 'F');
+      
+      pdf.setTextColor(146, 64, 14);
+      pdf.setFontSize(11);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('IMPORTANT MEDICAL NOTICE', margin + 5, yPosition + 8);
+      
+      pdf.setFontSize(9);
+      pdf.setFont('helvetica', 'normal');
+      const disclaimer = 'This AI analysis is intended for screening purposes only and should not replace professional medical advice. Please consult with a qualified ophthalmologist or healthcare provider for a comprehensive diagnosis and treatment plan. Early detection and proper management are key to preserving your vision.';
+      const splitDisclaimer = pdf.splitTextToSize(disclaimer, pageWidth - 2 * margin - 10);
+      pdf.text(splitDisclaimer, margin + 5, yPosition + 16);
+
+      // Footer
+      pdf.setTextColor(150, 150, 150);
+      pdf.setFontSize(8);
+      pdf.text('Retina Scan AI - Diabetic Retinopathy Detection System', pageWidth / 2, pageHeight - 10, { align: 'center' });
+      pdf.text('This report is confidential and intended for the patient and healthcare provider only.', pageWidth / 2, pageHeight - 5, { align: 'center' });
+
+      // Save PDF
+      const fileName = `Retina_Analysis_Report_${new Date().toISOString().split('T')[0]}.pdf`;
+      pdf.save(fileName);
+      
+      toast.dismiss();
+      toast.success('PDF report downloaded successfully!');
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.dismiss();
+      toast.error('Failed to generate PDF report. Please try again.');
+    }
   };
 
   const handleStartOver = () => {
