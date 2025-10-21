@@ -31,20 +31,18 @@ const Welcome = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
       {/* Hero Section */}
-            <div className="text-center space-y-6 animate-fade-in">
+      <div className="text-center space-y-6 animate-fade-in">
         <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4 animate-scale-in shadow-glow">
           <Eye className="h-10 w-10 text-primary" />
         </div>
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-          AI-Powered
-          <br />
           <span className="text-primary">Diabetic Retinopathy</span>
           <br />
-          Detection 
+          Detection
         </h1>
 
         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-delay">
-          Early detection of diabetic retinopathy using advanced AI analysis. 
+          Early detection of diabetic retinopathy using advanced AI analysis.
           Get your results in minutes with our professional diagnostic system.
         </p>
 
@@ -86,7 +84,7 @@ const Welcome = () => {
 
         {/* Disclaimer */}
         <p className="text-xs text-muted-foreground max-w-2xl mx-auto mt-8 pt-8 border-t border-border animate-fade-in-delay">
-          <strong>Medical Disclaimer:</strong> This tool is for educational and screening purposes only. 
+          <strong>Medical Disclaimer:</strong> This tool is for educational and screening purposes only.
           Always consult with a qualified healthcare professional for diagnosis and treatment.
         </p>
       </div>
