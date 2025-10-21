@@ -39,6 +39,7 @@ const Welcome = () => {
           <span className="text-primary">Diabetic Retinopathy</span>
           <br />
           Detection
+          <span className="text-xs text-muted-foreground ml-2">(v2025-10-22)</span>
         </h1>
 
         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-delay">
