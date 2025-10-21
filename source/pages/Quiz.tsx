@@ -8,12 +8,12 @@ import { ArrowLeft, ArrowRight, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 const questions = [
-  'Have you been diagnosed with diabetes (Type 1 or Type 2)?',
-  'Do you experience blurred or fluctuating vision?',
+  'Have you noticed any blurriness or difficulty focusing on objects — even when your glasses or lenses are clean?',
+  'Do you ever see small floating spots, dark strings, or flashes of light in your vision?',
   'Have you noticed any dark spots or floaters in your vision?',
   'Do you have difficulty seeing at night or in low light?',
-  'Have you experienced sudden vision loss in one or both eyes?',
-  'Do you have a family history of diabetic retinopathy or eye disease?',
+  'Do your blood sugar readings tend to vary a lot from day to day?',
+  'Do you sometimes skip meals or go long periods without eating, then eat a heavy or high-sugar meal afterward?',
 ];
 
 const Quiz = () => {
@@ -165,13 +165,12 @@ const Quiz = () => {
                 <button
                   key={index}
                   onClick={() => hasAnswered[index] && setCurrentQuestion(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentQuestion
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentQuestion
                       ? 'bg-primary w-8'
                       : hasAnswered[index]
-                      ? 'bg-primary/50'
-                      : 'bg-muted'
-                  }`}
+                        ? 'bg-primary/50'
+                        : 'bg-muted'
+                    }`}
                   disabled={!hasAnswered[index]}
                 />
               ))}
