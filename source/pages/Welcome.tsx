@@ -31,16 +31,16 @@ const Welcome = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
       {/* Hero Section */}
-      <div className="max-w-4xl w-full text-center space-y-8 animate-fade-in">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-primary shadow-glow animate-pulse-slow mb-6">
-          <Eye className="w-10 h-10 text-white" />
+            <div className="text-center space-y-6 animate-fade-in">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4 animate-scale-in shadow-glow">
+          <Eye className="h-10 w-10 text-primary" />
         </div>
-
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
           AI-Powered
-          <span className="block bg-gradient-primary bg-clip-text text-transparent mt-2">
-            Diabetic Retinopathy Detection
-          </span>
+          <br />
+          <span className="text-primary">Diabetic Retinopathy</span>
+          <br />
+          Detection 
         </h1>
 
         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-delay">

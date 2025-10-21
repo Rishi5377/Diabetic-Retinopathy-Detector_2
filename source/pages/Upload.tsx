@@ -110,7 +110,7 @@ const Upload = () => {
       setIsAnalyzing(false);
       toast.success('Analysis complete!');
       navigate('/results');
-    } catch (err: any) {
+    } catch (_err) {
       setIsAnalyzing(false);
       toast.error('Analysis failed. Please try again.');
     }
@@ -137,13 +137,12 @@ const Upload = () => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all duration-300 ${
-                isDragging
+              className={`border-2 border-dashed rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all duration-300 ${isDragging
                   ? 'border-primary bg-primary/5 scale-105'
                   : imagePreview
-                  ? 'border-success bg-success/5'
-                  : 'border-border hover:border-primary hover:bg-primary/5'
-              }`}
+                    ? 'border-success bg-success/5'
+                    : 'border-border hover:border-primary hover:bg-primary/5'
+                }`}
             >
               {imagePreview ? (
                 <div className="space-y-4 animate-fade-in">
