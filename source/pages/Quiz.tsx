@@ -158,10 +158,10 @@ const Quiz = () => {
                   key={index}
                   onClick={() => hasAnswered[index] && setCurrentQuestion(index)}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentQuestion
-                      ? 'bg-primary w-8'
-                      : hasAnswered[index]
-                        ? 'bg-primary/50'
-                        : 'bg-muted'
+                    ? 'bg-primary w-8'
+                    : hasAnswered[index]
+                      ? 'bg-primary/50'
+                      : 'bg-muted'
                     }`}
                   disabled={!hasAnswered[index]}
                 />
