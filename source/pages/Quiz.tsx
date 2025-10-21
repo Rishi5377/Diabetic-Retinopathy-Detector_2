@@ -167,6 +167,11 @@ const Quiz = () => {
                 />
               ))}
             </div>
+
+            {/* Build/version stamp for cache-busting verification */}
+            <div className="mt-6 text-center text-xs text-muted-foreground">
+              Build: {import.meta.env.VITE_BUILD_ID ? String(import.meta.env.VITE_BUILD_ID).slice(0, 7) : 'dev'}
+            </div>
           </div>
         </div>
       </div>
