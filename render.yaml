@@ -1,0 +1,64 @@
+services:services:
+
+  - type: web  - type: web
+
+    name: dr-backend    name: dr-backend
+
+    env: python    env: python
+
+    region: oregon    region: oregon
+
+    plan: starter    plan: starter
+
+    rootDir: backend    rootDir: backend
+
+    buildCommand: pip install -r requirements.txt    buildCommand: pip install -r requirements.txt
+
+    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /health    healthCheckPath: /health
+
+    envVars:    envVars:
+
+      - key: LOG_LEVEL      - key: LOG_LEVEL
+
+        value: INFO        value: INFO
+
+      - key: FRONTEND_ORIGIN      - key: FRONTEND_ORIGIN
+
+        value: "*"        value: "*"
+
+      - key: PYTHON_VERSION      - key: PYTHON_VERSION
+
+        value: "3.11"        value: "3.11"
+
+      - key: MODEL_PATH      - key: MODEL_PATH
+
+        value: Dect/best_model.pth        value: Dect/best_model.pth
+
+
+
+  - type: static_site  - type: static_site
+
+    name: dr-frontend    name: dr-frontend
+
+    env: static    env: static
+
+    rootDir: source    rootDir: frontend
+
+    buildCommand: npm install && npm run build    buildCommand: npm install && npm run build
+
+    staticPublishPath: dist    staticPublishPath: dist
+
+    envVars:    envVars:
+
+      - key: VITE_API_BASE_URL      - key: VITE_API_BASE_URL
+
+        fromService:        fromService:
+
+          type: web          type: web
+
+          name: dr-backend          name: dr-backend
+
+          property: url          property: url
+
