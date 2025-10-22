@@ -187,25 +187,34 @@ const Results = () => {
       pdf.setTextColor(0, 0, 0);
 
       prescriptions[riskLevel].forEach((prescription, index) => {
-        if (yPosition > pageHeight - 40) {
+        // Prescription text
+        pdf.setTextColor(0, 0, 0);
+        pdf.setFontSize(10);
+        const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 20);
+        
+        // Calculate required height for this prescription
+        const prescriptionHeight = splitPrescription.length * 5.5 + 5;
+        
+        // Check if we need a new page
+        if (yPosition + prescriptionHeight > pageHeight - 40) {
           pdf.addPage();
           yPosition = margin;
         }
 
         // Numbering circle
         pdf.setFillColor(37, 99, 235);
-        pdf.circle(margin + 3, yPosition + 2, 3, 'F');
+        pdf.circle(margin + 4, yPosition + 3.5, 3.5, 'F');
         pdf.setTextColor(255, 255, 255);
-        pdf.setFontSize(8);
-        pdf.text(`${index + 1}`, margin + 3, yPosition + 3, { align: 'center' });
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(`${index + 1}`, margin + 4, yPosition + 4.8, { align: 'center' });
 
-        // Prescription text
-        pdf.setTextColor(0, 0, 0);
-        pdf.setFontSize(10);
-        const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 15);
-        pdf.text(splitPrescription, margin + 10, yPosition + 3);
+        // Prescription text with proper spacing
+        pdf.setFont('helvetica', 'normal');
+        pdf.setTextColor(40, 40, 40);
+        pdf.text(splitPrescription, margin + 12, yPosition + 5);
 
-        yPosition += Math.max(splitPrescription.length * 5, 8) + 3;
+        yPosition += prescriptionHeight;
       });
 
       // Medical Disclaimer
