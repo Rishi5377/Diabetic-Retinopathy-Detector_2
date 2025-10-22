@@ -51,25 +51,25 @@ const Results = () => {
 
   const prescriptions = {
     low: [
-      'Maintain blood sugar levels within target range (HbA1c < 7%)',
-      'Schedule annual comprehensive eye examinations',
-      'Follow a balanced diet rich in leafy greens and omega-3 fatty acids',
-      'Exercise regularly (30 minutes daily, 5 days per week)',
-      'Monitor blood pressure and keep it below 130/80 mmHg',
+      'Diet — Use a low–glycemic plate: 1/2 non‑starchy vegetables, 1/4 lean protein, 1/4 whole grains; include omega‑3 sources (fatty fish, flaxseed, walnuts).',
+      'Diet — Keep consistent meal timing; don’t skip meals; limit sugary drinks and juices; hydrate 2–3 L/day unless your clinician advises otherwise.',
+      'Sleep — Aim for 7–8 hours nightly with a fixed sleep/wake schedule; limit caffeine after 2 pm; screen‑off time 60 minutes before bed.',
+      'Activity — At least 150 min/week of moderate activity (e.g., brisk walk 30 min × 5 days); add light strength training 2 days/week.',
+      'Activity — Reduce eye strain: 20‑20‑20 rule during screens, brief stretch/mobility breaks every hour.',
     ],
     moderate: [
-      'Intensify blood glucose monitoring - check levels 3-4 times daily',
-      'Schedule eye exams every 6 months with retinal imaging',
-      'Consider medication adjustment with your endocrinologist',
-      'Implement strict dietary control with a certified diabetes educator',
-      'Start anti-VEGF therapy if recommended by ophthalmologist',
+      'Diet — Work with a dietitian for carb counting and portions; target 25–35 g fiber/day; cut refined carbs/ultra‑processed foods.',
+      'Diet — Heart‑healthy, lower‑sodium meals (DASH‑style); include leafy greens (lutein/zeaxanthin) and omega‑3 fats.',
+      'Sleep — 7–9 hours nightly on a consistent schedule; dim lights 60–90 minutes before bed; discuss evaluation for sleep apnea if snoring or daytime sleepiness.',
+      'Activity — 30 minutes/day low‑ to moderate‑intensity aerobic exercise; add 2 non‑consecutive days of light resistance; avoid breath‑holding/straining (no Valsalva).',
+      'Activity — Post‑meal walks (10–20 minutes) to blunt glucose spikes; wear supportive footwear; stop if visual symptoms worsen.',
     ],
     high: [
-      'Immediate consultation with retinal specialist required',
-      'Consider laser photocoagulation or intravitreal injections',
-      'Aggressive blood sugar control with insulin therapy optimization',
-      'Monthly eye examinations and OCT scans',
-      'Coordinate care between endocrinologist, ophthalmologist, and primary care',
+      'Diet — Supervised medical nutrition therapy: small, frequent, balanced meals; minimize refined sugars; emphasize whole foods; restrict sodium if hypertensive.',
+      'Diet — Keep carbohydrate intake consistent per meal and coordinate with insulin/meds to prevent highs/lows; avoid alcohol until cleared by your clinician.',
+      'Sleep — Strict 7–9 hours nightly; fixed schedule; evaluate and treat sleep apnea if suspected; avoid heavy late‑night meals.',
+      'Activity — Gentle, clinician‑cleared movement only (e.g., easy walking 10–20 minutes after meals); avoid high‑impact exercise, heavy lifting, inverted postures, and activities that raise intraocular pressure.',
+      'Activity — Daily light mobility and balance work to prevent falls; stop activity if you notice new floaters, flashes, or visual dark spots.',
     ],
   };
 
@@ -95,7 +95,7 @@ const Results = () => {
 
       pdf.setFontSize(12);
       pdf.setFont('helvetica', 'normal');
-      pdf.text('AI-Powered Retinal Scan Analysis', pageWidth / 2, 30, { align: 'center' });
+      pdf.text('Retinal Scan Analysis', pageWidth / 2, 30, { align: 'center' });
 
       yPosition = 50;
 
@@ -127,7 +127,7 @@ const Results = () => {
 
       pdf.setFontSize(11);
       pdf.setTextColor(100, 100, 100);
-      pdf.text(`AI Confidence: ${confidence.toFixed(1)}%`, margin + 5, yPosition + 28);
+      pdf.text(`Model Confidence: ${confidence.toFixed(1)}%`, margin + 5, yPosition + 28);
 
       yPosition += 45;
 
