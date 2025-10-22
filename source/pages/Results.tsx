@@ -182,14 +182,12 @@ const Results = () => {
       pdf.text('RECOMMENDED MANAGEMENT PLAN', margin, yPosition);
       yPosition += 10;
 
-      pdf.setFontSize(10);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(0, 0, 0);
-
       prescriptions[riskLevel].forEach((prescription, index) => {
-        // Prescription text
-        pdf.setTextColor(0, 0, 0);
+        // Reset font settings for consistency
         pdf.setFontSize(10);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setTextColor(60, 60, 60);
+        
         const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 20);
         
         // Calculate required height for this prescription
@@ -204,14 +202,17 @@ const Results = () => {
         // Numbering circle
         pdf.setFillColor(37, 99, 235);
         pdf.circle(margin + 4, yPosition + 3.5, 3.5, 'F');
+        
+        // Circle number (white text)
         pdf.setTextColor(255, 255, 255);
         pdf.setFontSize(9);
         pdf.setFont('helvetica', 'bold');
         pdf.text(`${index + 1}`, margin + 4, yPosition + 4.8, { align: 'center' });
 
-        // Prescription text with proper spacing
+        // Prescription text - reset to consistent style
+        pdf.setFontSize(10);
         pdf.setFont('helvetica', 'normal');
-        pdf.setTextColor(40, 40, 40);
+        pdf.setTextColor(60, 60, 60);
         pdf.text(splitPrescription, margin + 12, yPosition + 5);
 
         yPosition += prescriptionHeight;
