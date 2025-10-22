@@ -183,12 +183,23 @@ const Results = () => {
       yPosition += 10;
 
       prescriptions[riskLevel].forEach((prescription, index) => {
+        // Sanitize text for PDF - replace special characters that jsPDF can't handle
+        const sanitizedText = prescription
+          .replace(/—/g, '-')  // em-dash to hyphen
+          .replace(/–/g, '-')  // en-dash to hyphen
+          .replace(/‑/g, '-')  // non-breaking hyphen to hyphen
+          .replace(/×/g, 'x')  // multiplication sign to x
+          .replace(/'/g, "'")  // smart quotes to straight quotes
+          .replace(/'/g, "'")
+          .replace(/"/g, '"')
+          .replace(/"/g, '"');
+        
         // Reset font settings for consistency
         pdf.setFontSize(10);
         pdf.setFont('helvetica', 'normal');
         pdf.setTextColor(60, 60, 60);
         
-        const splitPrescription = pdf.splitTextToSize(prescription, pageWidth - 2 * margin - 20);
+        const splitPrescription = pdf.splitTextToSize(sanitizedText, pageWidth - 2 * margin - 20);
         
         // Calculate required height for this prescription
         const prescriptionHeight = splitPrescription.length * 5.5 + 5;
