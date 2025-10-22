@@ -10,7 +10,7 @@ import html2canvas from 'html2canvas';
 
 const Results = () => {
   const navigate = useNavigate();
-  const { analysisResult, resetApp } = useAppContext();
+  const { analysisResult, resetApp, patientInfo } = useAppContext();
 
   if (!analysisResult) {
     navigate('/');
@@ -111,6 +111,24 @@ const Results = () => {
       });
       pdf.text(`Report Generated: ${reportDate}`, margin, yPosition);
       yPosition += 15;
+
+      // Patient Information Section
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFontSize(12);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('PATIENT INFORMATION', margin, yPosition);
+      yPosition += 8;
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(60, 60, 60);
+      const piName = patientInfo?.name?.trim() ? patientInfo.name : '-';
+      const piAge = patientInfo?.age?.trim() ? patientInfo.age : '-';
+      const piEmail = patientInfo?.email?.trim() ? patientInfo.email : '-';
+      pdf.text(`Name: ${piName}`, margin, yPosition);
+      pdf.text(`Age: ${piAge}`, margin + 70, yPosition);
+      yPosition += 6;
+      pdf.text(`Email: ${piEmail}`, margin, yPosition);
+      yPosition += 12;
 
       // Diagnosis Section
       pdf.setFillColor(240, 240, 240);
