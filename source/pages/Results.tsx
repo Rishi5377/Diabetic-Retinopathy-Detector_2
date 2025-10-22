@@ -261,6 +261,24 @@ const Results = () => {
         <StepIndicator currentStep={4} totalSteps={4} stepLabel="Analysis Results" />
 
         <div className="max-w-4xl mx-auto space-y-6">
+          {/* Patient Summary */}
+          <div className="bg-card rounded-2xl shadow p-6 border border-border animate-scale-in">
+            <h3 className="text-lg font-semibold text-foreground mb-3">Patient Information</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div>
+                <div className="text-muted-foreground">Name</div>
+                <div className="text-foreground font-medium">{(patientInfo?.name?.trim() || '-') }</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Age</div>
+                <div className="text-foreground font-medium">{(patientInfo?.age?.trim() || '-') }</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Email</div>
+                <div className="text-foreground font-medium truncate" title={patientInfo?.email}>{(patientInfo?.email?.trim() || '-') }</div>
+              </div>
+            </div>
+          </div>
           {/* Main Results Card */}
           <div className="bg-card rounded-2xl shadow-lg p-6 sm:p-8 lg:p-10 border border-border animate-scale-in">
             <div className="text-center mb-8">
